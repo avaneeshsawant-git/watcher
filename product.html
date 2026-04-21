@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Details</title>
+<link rel="stylesheet" href="styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins&display=swap" rel="stylesheet">
+
+<style>
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    padding: 15px 60px;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.logo {
+    color: #c6a45a;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 4px;
+}
+
+nav {
+    display: flex;
+    gap: 35px;
+    align-items: center;
+}
+
+nav a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #c6a45a;
+    transition: 0.4s ease;
+}
+
+nav a:hover {
+    color: #c6a45a;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+/* Body padding for fixed navbar */
+body {
+    padding-top: 90px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+<div class="container nav-container">
+<div class="logo">TIME STEAL</div>
+<nav>
+<a href="home.php">Home</a>
+<a href="cart.php">Cart</a>
+</nav>
+</div>
+</header>
+
+<section class="product-page container">
+<div class="product-gallery">
+<img id="productImage">
+</div>
+
+<div class="product-info">
+<h1 id="productName"></h1>
+<p id="productPrice" class="price"></p>
+<p id="productDesc"></p>
+<button id="addBtn" class="btn">Add to Cart</button>
+</div>
+</section>
+
+<script src="script.js"></script>
+
+<script>
+const data={
+obsidian:{
+name:"Obsidian Royale",
+price:3500,
+img:"https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=900",
+desc:"A bold luxury watch featuring a black dial and stainless steel precision engineering."
+},
+chronos:{
+name:"Golden Chronos",
+price:4200,
+img:"https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=900",
+desc:"An elegant gold luxury chronograph crafted for collectors."
+},
+midnight:{
+name:"Midnight Steel",
+price:3800,
+img:"https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?w=900",
+desc:"A modern steel luxury watch built for timeless performance."
+}
+}
+
+const params=new URLSearchParams(window.location.search)
+const watch=params.get("watch")
+
+if(data[watch]){
+document.getElementById("productImage").src=data[watch].img
+document.getElementById("productName").innerText=data[watch].name
+document.getElementById("productPrice").innerText="$"+data[watch].price
+document.getElementById("productDesc").innerText=data[watch].desc
+document.getElementById("addBtn").onclick=()=>addToCart(data[watch].name,data[watch].price)
+}
+</script>
+
+</body>
+</html>

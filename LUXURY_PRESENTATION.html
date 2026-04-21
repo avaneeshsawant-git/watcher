@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeSteal - Premium E-Commerce Platform | Executive Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c6a45a;
+            --gold-light: #d4b896;
+            --dark: #050505;
+            --darker: #0a0a0a;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --accent: #8b7a47;
+            --bg-light: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 50%, var(--bg-light) 100%);
+            overflow: hidden;
+            color: var(--white);
+            letter-spacing: 0.3px;
+        }
+
+        /* ============= PARTICLE BACKGROUND ============= */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* ============= PRESENTATION CONTAINER ============= */
+        .presentation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 101;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        .slide.next {
+            transform: translateX(100%);
+        }
+
+        /* ============= SLIDE CONTENT ============= */
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            padding: 100px 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ============= TITLE SLIDE ============= */
+        .title-slide {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.2) 0%,
+                rgba(5, 5, 5, 0.98) 50%,
+                rgba(26, 26, 26, 0.98) 100%);
+            text-align: center;
+        }
+
+        .title-slide .logo {
+            font-size: 140px;
+            color: var(--gold);
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 40px;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 0 0 80px rgba(198, 164, 90, 0.5), 0 0 40px rgba(198, 164, 90, 0.3);
+        }
+
+        .title-slide h1 {
+            font-size: 90px;
+            font-family: 'Playfair Display', serif;
+            color: var(--white);
+            margin-bottom: 30px;
+            letter-spacing: 6px;
+            animation: slideInDown 0.8s ease-out;
+            text-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+            font-weight: 700;
+        }
+
+        .title-slide p {
+            font-size: 28px;
+            color: var(--gold-light);
+            margin-bottom: 20px;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.75);
+            animation: fadeIn 1s ease-out 0.4s both;
+            font-weight: 300;
+        }
+
+        /* ============= ANIMATIONS ============= */
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px);
+                filter: drop-shadow(0 0 30px rgba(198, 164, 90, 0.3));
+            }
+            50% { 
+                transform: translateY(-25px);
+                filter: drop-shadow(0 0 40px rgba(198, 164, 90, 0.5));
+            }
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-80px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(80px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-80px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(80px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0;
+                filter: blur(5px);
+            }
+            to { 
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+                filter: blur(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(198, 164, 90, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(198, 164, 90, 0.6);
+            }
+        }
+
+        /* ============= CONTENT SECTIONS ============= */
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .content-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .content-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+
+        .slide h2 {
+            font-size: 64px;
+            font-family: 'Playfair Display', serif;
+            color: var(--gold);
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(198, 164, 90, 0.25);
+            font-weight: 700;
+        }
+
+        .slide h3 {
+            font-size: 32px;
+            color: var(--gold-light);
+            margin-top: 35px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .slide p {
+            font-size: 20px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .slide ul {
+            list-style: none;
+            margin-top: 25px;
+        }
+
+        .slide li {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.88);
+            margin-bottom: 16px;
+            padding-left: 40px;
+            position: relative;
+            animation: slideInLeft 0.6s ease-out backwards;
+            line-height: 1.6;
+        }
+
+        .slide li:nth-child(1) { animation-delay: 0.1s; }
+        .slide li:nth-child(2) { animation-delay: 0.2s; }
+        .slide li:nth-child(3) { animation-delay: 0.3s; }
+        .slide li:nth-child(4) { animation-delay: 0.4s; }
+        .slide li:nth-child(5) { animation-delay: 0.5s; }
+
+        .slide li:before {
+            content: "●";
+            position: absolute;
+            left: 8px;
+            color: var(--gold-light);
+            font-weight: bold;
+            font-size: 8px;
+        }
+
+        /* ============= FEATURE BOXES ============= */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-box {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.12) 0%,
+                rgba(255, 255, 255, 0.03) 100%);
+            border: 1.5px solid rgba(198, 164, 90, 0.35);
+            padding: 35px;
+            border-radius: 16px;
+            animation: scaleIn 0.6s ease-out backwards;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-box:hover {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.18) 0%,
+                rgba(255, 255, 255, 0.06) 100%);
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 50px rgba(198, 164, 90, 0.25);
+        }
+
+        .feature-box:nth-child(1) { animation-delay: 0.1s; }
+        .feature-box:nth-child(2) { animation-delay: 0.2s; }
+        .feature-box:nth-child(3) { animation-delay: 0.3s; }
+        .feature-box:nth-child(4) { animation-delay: 0.4s; }
+
+        .feature-box h4 {
+            color: var(--gold-light);
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-box p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* ============= STAT BOXES ============= */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.12) 0%,
+                rgba(255, 255, 255, 0.02) 100%);
+            border: 1.5px solid rgba(198, 164, 90, 0.35);
+            border-radius: 16px;
+            animation: scaleIn 0.6s ease-out backwards;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-box:hover {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.18) 0%,
+                rgba(255, 255, 255, 0.05) 100%);
+            border-color: var(--gold);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(198, 164, 90, 0.25);
+        }
+
+        .stat-box:nth-child(1) { animation-delay: 0.1s; }
+        .stat-box:nth-child(2) { animation-delay: 0.2s; }
+        .stat-box:nth-child(3) { animation-delay: 0.3s; }
+        .stat-box:nth-child(4) { animation-delay: 0.4s; }
+
+        .stat-number {
+            font-size: 56px;
+            color: var(--gold-light);
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .stat-label {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============= FULL WIDTH BOXES ============= */
+        .full-width {
+            width: 100%;
+        }
+
+        .architecture-box {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.12) 0%,
+                rgba(26, 26, 26, 0.6) 100%);
+            border: 1.5px solid rgba(198, 164, 90, 0.3);
+            padding: 50px;
+            border-radius: 20px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .architecture-box h3 {
+            margin-bottom: 30px;
+            font-size: 28px;
+            color: var(--gold-light);
+        }
+
+        .layer {
+            background: linear-gradient(135deg, 
+                rgba(5, 5, 5, 0.8) 0%,
+                rgba(26, 26, 26, 0.5) 100%);
+            border-left: 5px solid var(--gold);
+            padding: 22px 28px;
+            margin: 15px 0;
+            border-radius: 10px;
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.85);
+            animation: slideInRight 0.6s ease-out backwards;
+            line-height: 1.7;
+            transition: all 0.3s ease;
+        }
+
+        .layer:hover {
+            background: linear-gradient(135deg, 
+                rgba(5, 5, 5, 0.9) 0%,
+                rgba(26, 26, 26, 0.6) 100%);
+            border-left-color: var(--gold-light);
+            transform: translateX(8px);
+        }
+
+        .layer:nth-child(1) { animation-delay: 0.1s; }
+        .layer:nth-child(2) { animation-delay: 0.2s; }
+        .layer:nth-child(3) { animation-delay: 0.3s; }
+        .layer:nth-child(4) { animation-delay: 0.4s; }
+        .layer:nth-child(5) { animation-delay: 0.5s; }
+
+        /* ============= NAVIGATION ============= */
+        .nav-controls {
+            position: fixed;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            z-index: 200;
+        }
+
+        .nav-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg,
+                rgba(198, 164, 90, 0.25) 0%,
+                rgba(198, 164, 90, 0.1) 100%);
+            border: 2px solid var(--gold);
+            color: var(--gold);
+            cursor: pointer;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg,
+                rgba(198, 164, 90, 0.4) 0%,
+                rgba(198, 164, 90, 0.2) 100%);
+            box-shadow: 0 0 30px rgba(198, 164, 90, 0.5), 0 0 60px rgba(198, 164, 90, 0.2);
+            transform: scale(1.1);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ============= SLIDE COUNTER ============= */
+        .slide-counter {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            font-size: 18px;
+            color: var(--gold);
+            z-index: 200;
+            text-align: center;
+        }
+
+        .slide-number {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+
+        /* ============= PROGRESS BAR ============= */
+        .progress-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, transparent 100%);
+            z-index: 200;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px rgba(198, 164, 90, 0.4);
+        }
+
+        /* ============= TABLE ============= */
+        .database-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .database-table th {
+            background: linear-gradient(135deg, 
+                rgba(198, 164, 90, 0.25) 0%,
+                rgba(198, 164, 90, 0.1) 100%);
+            padding: 20px;
+            text-align: left;
+            color: var(--gold-light);
+            border-bottom: 2px solid rgba(198, 164, 90, 0.4);
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .database-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(198, 164, 90, 0.15);
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .database-table tbody tr:hover {
+            background: rgba(198, 164, 90, 0.08);
+            transition: background 0.3s ease;
+        }
+
+        /* ============= BADGES ============= */
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg,
+                rgba(198, 164, 90, 0.25) 0%,
+                rgba(198, 164, 90, 0.1) 100%);
+            border: 1.5px solid rgba(198, 164, 90, 0.4);
+            color: var(--gold-light);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 15px;
+            margin-right: 12px;
+            margin-bottom: 12px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            background: linear-gradient(135deg,
+                rgba(198, 164, 90, 0.35) 0%,
+                rgba(198, 164, 90, 0.15) 100%);
+            border-color: var(--gold);
+        }
+
+        /* ============= SECTION COLORS ============= */
+        .slide-blue {
+            background: linear-gradient(135deg, 
+                rgba(30, 80, 130, 0.2) 0%,
+                rgba(5, 5, 5, 0.96) 60%,
+                rgba(10, 10, 10, 0.96) 100%);
+        }
+
+        .slide-green {
+            background: linear-gradient(135deg, 
+                rgba(60, 120, 60, 0.2) 0%,
+                rgba(5, 5, 5, 0.96) 60%,
+                rgba(10, 10, 10, 0.96) 100%);
+        }
+
+        .slide-purple {
+            background: linear-gradient(135deg, 
+                rgba(120, 60, 160, 0.2) 0%,
+                rgba(5, 5, 5, 0.96) 60%,
+                rgba(10, 10, 10, 0.96) 100%);
+        }
+
+        .slide-orange {
+            background: linear-gradient(135deg, 
+                rgba(160, 100, 40, 0.2) 0%,
+                rgba(5, 5, 5, 0.96) 60%,
+                rgba(10, 10, 10, 0.96) 100%);
+        }
+
+        /* ============= RESPONSIVE ============= */
+        @media (max-width: 1400px) {
+            .slide-content {
+                padding: 60px;
+            }
+
+            .slide h2 {
+                font-size: 48px;
+            }
+
+            .content-wrapper {
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .slide-content {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BACKGROUND PARTICLES -->
+    <canvas id="particles"></canvas>
+
+    <!-- PRESENTATION -->
+    <div class="presentation">
+        <!-- SLIDE 1: TITLE -->
+        <div class="slide active title-slide">
+            <div class="slide-content">
+                <div class="logo">⏰</div>
+                <h1>TIMESTEAL</h1>
+                <p>Premium Luxury Watch E-Commerce Platform</p>
+                <p class="subtitle">End-Semester Evaluation | April 2026</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: EXECUTIVE OVERVIEW -->
+        <div class="slide slide-blue">
+            <div class="slide-content">
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <h2>Executive Overview</h2>
+                        <p>TimeSteal is a fully functional luxury watch e-commerce platform featuring:</p>
+                        <ul>
+                            <li>Complete user authentication system</li>
+                            <li>Advanced product catalog management</li>
+                            <li>Secure shopping cart & checkout</li>
+                            <li>Premium UI with luxury animations</li>
+                            <li>Production-ready architecture</li>
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-number">50+</div>
+                                <div class="stat-label">Features</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">5</div>
+                                <div class="stat-label">DB Tables</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">40+</div>
+                                <div class="stat-label">PHP Files</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-number">100%</div>
+                                <div class="stat-label">Complete</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: TECHNOLOGY STACK -->
+        <div class="slide slide-green">
+            <div class="slide-content">
+                <h2>Technology Stack</h2>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <h4>Frontend Layer</h4>
+                        <p>HTML5, CSS3, JavaScript (ES6+) with advanced animations and responsive design</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Backend Layer</h4>
+                        <p>PHP 7.4+ with prepared statements and secure session management</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Database Layer</h4>
+                        <p>MySQL with normalized schema and proper indexing</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Email Service</h4>
+                        <p>PHPMailer with Gmail SMTP integration and 40+ languages</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: KEY FEATURES -->
+        <div class="slide slide-purple">
+            <div class="slide-content">
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <h2>Core Features</h2>
+                        <h3>Authentication</h3>
+                        <ul>
+                            <li>Secure registration & login</li>
+                            <li>Bcrypt password hashing</li>
+                            <li>Remember Me functionality</li>
+                            <li>Session management</li>
+                        </ul>
+                        <h3>Shopping</h3>
+                        <ul>
+                            <li>Product catalog (5+ watches)</li>
+                            <li>Advanced search & filtering</li>
+                            <li>Shopping cart with AJAX</li>
+                            <li>Real-time updates</li>
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <h3>Checkout</h3>
+                        <ul>
+                            <li>Multi-step payment process</li>
+                            <li>6 payment methods</li>
+                            <li>GST calculation (18%)</li>
+                            <li>Coupon system</li>
+                        </ul>
+                        <h3>Advanced</h3>
+                        <ul>
+                            <li>Product reviews (1-5 stars)</li>
+                            <li>Email notifications</li>
+                            <li>Order tracking</li>
+                            <li>Stock management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: USER AUTHENTICATION FLOW -->
+        <div class="slide slide-orange">
+            <div class="slide-content">
+                <h2>User Authentication System</h2>
+                <div class="architecture-box">
+                    <h3>Registration Flow</h3>
+                    <div class="layer">User submits registration form → Validation (email, password) → Bcrypt hashing</div>
+                    <div class="layer">Database insertion with prepared statements → Auto-login session → Redirect to home</div>
+                    <div class="layer">Session variables created → Cookie set for "Remember Me" (7 days)</div>
+
+                    <h3 style="margin-top: 30px;">Login Flow</h3>
+                    <div class="layer">Check existing cookie → Auto-login if valid → Display dashboard</div>
+                    <div class="layer">Query database with username → Verify password with password_verify()</div>
+                    <div class="layer">Set session variables → Optional "Remember Me" cookie → Secure redirect</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: DATABASE ARCHITECTURE -->
+        <div class="slide slide-blue">
+            <div class="slide-content">
+                <h2>Database Architecture</h2>
+                <div class="full-width architecture-box">
+                    <table class="database-table">
+                        <tr>
+                            <th>Table</th>
+                            <th>Purpose</th>
+                            <th>Key Columns</th>
+                            <th>Relationships</th>
+                        </tr>
+                        <tr>
+                            <td><strong>users</strong></td>
+                            <td>User credentials</td>
+                            <td>id, username, email, password</td>
+                            <td>PK</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cart</strong></td>
+                            <td>Shopping cart items</td>
+                            <td>id, user_id, product_id, quantity</td>
+                            <td>FK users.id</td>
+                        </tr>
+                        <tr>
+                            <td><strong>orders</strong></td>
+                            <td>Customer purchases</td>
+                            <td>id, user_id, total, created_at</td>
+                            <td>FK users.id</td>
+                        </tr>
+                        <tr>
+                            <td><strong>order_items</strong></td>
+                            <td>Items in orders</td>
+                            <td>id, order_id, product_id, quantity, price</td>
+                            <td>FK orders.id</td>
+                        </tr>
+                        <tr>
+                            <td><strong>product_reviews</strong></td>
+                            <td>Customer reviews</td>
+                            <td>id, product_id, user_id, rating, review</td>
+                            <td>FK users.id</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: SHOPPING EXPERIENCE -->
+        <div class="slide slide-green">
+            <div class="slide-content">
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <h2>Shopping Experience</h2>
+                        <h3>Product Discovery</h3>
+                        <ul>
+                            <li>5+ luxury watch models</li>
+                            <li>Real-time search functionality</li>
+                            <li>Sort by price, name, newest</li>
+                            <li>Detailed specifications</li>
+                            <li>Stock status display</li>
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <h3>Cart Management</h3>
+                        <ul>
+                            <li>Add to cart with AJAX</li>
+                            <li>Real-time quantity updates</li>
+                            <li>Remove items instantly</li>
+                            <li>Live cart counter</li>
+                            <li>Persistent across sessions</li>
+                        </ul>
+                        <h3>Product Reviews</h3>
+                        <ul>
+                            <li>1-5 star rating system</li>
+                            <li>Text reviews with validation</li>
+                            <li>Timestamp tracking</li>
+                            <li>User identification</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: CHECKOUT SYSTEM -->
+        <div class="slide slide-purple">
+            <div class="slide-content">
+                <h2>Multi-Step Checkout System</h2>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <h4>Step 1: Shipping</h4>
+                        <p>Collect delivery address with validation including name, email, phone, address, city, state, pincode</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Step 2: Summary</h4>
+                        <p>Display order items, subtotal, GST (18%), discounts applied, and grand total calculation</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Step 3: Payment</h4>
+                        <p>Choose from 6 payment methods: Card, Wallet, UPI, Net Banking, Cash on Delivery</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Step 4: Confirmation</h4>
+                        <p>Generate Order ID, store in database, clear cart, display success message</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: SECURITY FEATURES -->
+        <div class="slide slide-orange">
+            <div class="slide-content">
+                <h2>Security Implementation</h2>
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <h3>Authentication Security</h3>
+                        <ul>
+                            <li>Bcrypt password hashing</li>
+                            <li>Secure password verification</li>
+                            <li>Session token validation</li>
+                            <li>Secure cookie handling</li>
+                            <li>Auto-logout on inactivity</li>
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <h3>Data Protection</h3>
+                        <ul>
+                            <li>Prepared statements (SQL injection)</li>
+                            <li>Input sanitization & validation</li>
+                            <li>XSS prevention (htmlspecialchars)</li>
+                            <li>CSRF token validation</li>
+                            <li>Email verification</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: USER INTERFACE DESIGN -->
+        <div class="slide slide-blue">
+            <div class="slide-content">
+                <h2>Premium UI/UX Design</h2>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <h4>Color Palette</h4>
+                        <p><strong>Primary:</strong> #050505 Dark Black<br><strong>Accent:</strong> #c6a45a Premium Gold<br><strong>Secondary:</strong> #1a1a1a Dark Gray</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Typography</h4>
+                        <p><strong>Headings:</strong> Playfair Display (Serif)<br><strong>Body:</strong> Poppins (Sans-serif)<br><strong>Letter Spacing:</strong> Premium luxury feel</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Visual Effects</h4>
+                        <p>Particle animations, smooth transitions, glass-morphism, gradient overlays, box shadows</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Responsive Design</h4>
+                        <p>Mobile-first approach, CSS Grid & Flexbox, touch-friendly interface, all screen sizes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: PRODUCT LINEUP -->
+        <div class="slide slide-green">
+            <div class="slide-content">
+                <h2>Luxury Watch Catalog</h2>
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <div class="feature-box">
+                            <h4>Obsidian Royale</h4>
+                            <p>₹3,500 | Black dial, stainless steel, formal wear</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>Golden Chronos</h4>
+                            <p>₹4,200 | Gold-toned, chronograph, 10% discount</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>Midnight Steel</h4>
+                            <p>₹3,800 | Minimal design, versatile, professional</p>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="feature-box">
+                            <h4>Royal Phantom</h4>
+                            <p>₹5,400 | Premium collector piece, dark profile</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>Platinum Edge</h4>
+                            <p>₹6,100 | Platinum finish, 15% discount, elegant</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>And More...</h4>
+                            <p>Complete luxury collection with specifications</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: FILE STRUCTURE -->
+        <div class="slide slide-purple">
+            <div class="slide-content">
+                <h2>Project Architecture</h2>
+                <div class="architecture-box">
+                    <h3>Core Pages</h3>
+                    <div class="layer">home.php | login.php | register.php | dashboard.php | cart.php | checkout.php | product_detail.php</div>
+
+                    <h3>Support Services</h3>
+                    <div class="layer">add_to_cart.php | update_cart.php | remove_item.php | send_mail.php | contact.php</div>
+
+                    <h3>Configuration</h3>
+                    <div class="layer">config.php (Database) | mail_config.php (Email) | products_catalog.php (Product data)</div>
+
+                    <h3>Frontend Assets</h3>
+                    <div class="layer">styles.css | auth.css | script.js | transition.js | PHPMailer/ (Email library)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13: PERFORMANCE METRICS -->
+        <div class="slide slide-orange">
+            <div class="slide-content">
+                <h2>Project Metrics & Statistics</h2>
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Features</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">5000+</div>
+                        <div class="stat-label">Lines of Code</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">40+</div>
+                        <div class="stat-label">PHP Files</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Security Layers</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Complete</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Tested</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Payment Methods</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">18%</div>
+                        <div class="stat-label">GST Applied</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14: SECURITY HIGHLIGHTS -->
+        <div class="slide slide-blue">
+            <div class="slide-content">
+                <h2>Advanced Security Features</h2>
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <div class="feature-box">
+                            <h4>✓ SQL Injection Prevention</h4>
+                            <p>Prepared statements in all database queries</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ XSS Protection</h4>
+                            <p>Output encoding with htmlspecialchars()</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ Password Security</h4>
+                            <p>Bcrypt hashing with PASSWORD_DEFAULT</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ Session Security</h4>
+                            <p>Secure session variables and tokens</p>
+                        </div>
+                    </div>
+                    <div class="content-right">
+                        <div class="feature-box">
+                            <h4>✓ Input Validation</h4>
+                            <p>Email, password, username verification</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ Cookie Security</h4>
+                            <p>Secure, HttpOnly, 7-day expiration</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ CSRF Protection</h4>
+                            <p>Token validation in forms</p>
+                        </div>
+                        <div class="feature-box">
+                            <h4>✓ Data Encryption</h4>
+                            <p>Sensitive data protection</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 15: ACHIEVEMENTS -->
+        <div class="slide slide-green">
+            <div class="slide-content">
+                <h2>Milestones & Achievements</h2>
+                <div class="content-wrapper">
+                    <div class="content-left">
+                        <h3>Mid-Semester (50%)</h3>
+                        <ul>
+                            <li>✓ User authentication system</li>
+                            <li>✓ Product catalog setup</li>
+                            <li>✓ Shopping cart functionality</li>
+                            <li>✓ Basic checkout page</li>
+                            <li>✓ Database schema design</li>
+                        </ul>
+                    </div>
+                    <div class="content-right">
+                        <h3>End-Semester (100%)</h3>
+                        <ul>
+                            <li>✓ Complete checkout with orders</li>
+                            <li>✓ Product reviews & ratings</li>
+                            <li>✓ Email notifications</li>
+                            <li>✓ Advanced coupon system</li>
+                            <li>✓ Premium UI animations</li>
+                            <li>✓ Real-time AJAX updates</li>
+                            <li>✓ GST tax system</li>
+                            <li>✓ Complete security suite</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 16: FUTURE ROADMAP -->
+        <div class="slide slide-purple">
+            <div class="slide-content">
+                <h2>Future Enhancements</h2>
+                <div class="feature-grid">
+                    <div class="feature-box">
+                        <h4>Administration</h4>
+                        <p>Admin panel for product management, inventory tracking, order administration</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Payments</h4>
+                        <p>Multiple payment gateway integration, Razorpay, Stripe, PayPal support</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>User Features</h4>
+                        <p>Wishlist functionality, order history, profile customization, address management</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Analytics</h4>
+                        <p>Sales dashboard, order tracking, user behavior analytics, reporting</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Recommendations</h4>
+                        <p>AI-powered product recommendations, personalization engine</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Internationalization</h4>
+                        <p>Multi-language support, multiple currencies, regional variants</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 17: CONCLUSION -->
+        <div class="slide title-slide">
+            <div class="slide-content" style="text-align: center;">
+                <h2 style="font-size: 72px; margin-bottom: 40px;">Project Complete</h2>
+                <p style="font-size: 24px; color: var(--gold); margin-bottom: 30px;">Production-Ready E-Commerce Platform</p>
+                <div class="stats-container">
+                    <div class="stat-box">
+                        <div class="stat-number">✓</div>
+                        <div class="stat-label">All Features Implemented</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">✓</div>
+                        <div class="stat-label">100% Tested & Verified</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">✓</div>
+                        <div class="stat-label">Security Hardened</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">✓</div>
+                        <div class="stat-label">Ready for Deployment</div>
+                    </div>
+                </div>
+                <p style="margin-top: 50px; font-size: 18px; color: rgba(255,255,255,0.7);">Thank you for reviewing TimeSteal</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION CONTROLS -->
+    <div class="nav-controls">
+        <button class="nav-btn" onclick="previousSlide()">❮</button>
+        <button class="nav-btn" onclick="nextSlide()">❯</button>
+    </div>
+
+    <!-- SLIDE COUNTER & PROGRESS -->
+    <div class="slide-counter">
+        <div class="slide-number"><span id="current-slide">1</span> / <span id="total-slides">17</span></div>
+    </div>
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- PARTICLE SCRIPT -->
+    <script>
+        // Initialize particles
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.3 + 0.1;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(198, 164, 90, ${this.opacity})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.update();
+                particle.draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+
+    <!-- PRESENTATION SCRIPT -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides.forEach(slide => {
+                slide.classList.remove('active', 'prev', 'next');
+            });
+
+            if (n >= totalSlides) currentSlide = 0;
+            if (n < 0) currentSlide = totalSlides - 1;
+
+            slides[currentSlide].classList.add('active');
+
+            // Update counter
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+
+        // Initialize
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+document.querySelectorAll('.payment-option').forEach(option => {
+    option.addEventListener('click', () => {
+        document.querySelectorAll('.payment-option').forEach(el => el.classList.remove('active'));
+        option.classList.add('active');
+        option.querySelector('input[type=radio]').checked = true;
+    });
+});
+
+// Coupon dropdown functionality
+const couponBtn = document.getElementById('couponDropdownBtn');
+const couponMenu = document.getElementById('couponDropdownMenu');
+const couponLabel = document.getElementById('couponDropdownLabel');
+const couponInput = document.getElementById('coupon_code');
+
+if (couponBtn) {
+    couponBtn.addEventListener('click', () => {
+        couponBtn.classList.toggle('open');
+        couponMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('.coupon-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const code = item.getAttribute('data-code');
+            const name = item.querySelector('.coupon-name').textContent;
+            
+            couponInput.value = code;
+            couponLabel.textContent = name + ' - ' + code;
+            
+            couponBtn.classList.remove('open');
+            couponMenu.classList.remove('open');
+            
+            document.querySelectorAll('.coupon-item').forEach(el => el.classList.remove('selected'));
+            item.classList.add('selected');
+        });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.coupon-dropdown-wrapper')) {
+            couponBtn.classList.remove('open');
+            couponMenu.classList.remove('open');
+        }
+    });
+}

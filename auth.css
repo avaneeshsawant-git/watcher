@@ -1,0 +1,461 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars from particles */
+
+    background: linear-gradient(-45deg, #000000, #111111, #0a0a0a, #1a1a1a);
+    background-size: 400% 400%;
+    animation: bgMove 10s ease infinite;
+}
+
+/* Background animation */
+@keyframes bgMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== LUXURY BACKGROUND ANIMATIONS ===== */
+
+/* Floating Gold Particles */
+.particle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: radial-gradient(circle, #ffff00, #ffd700, #ff8c00, transparent);
+    border-radius: 50%;
+    animation: float 6s linear infinite;
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(255, 255, 0, 1), 0 0 50px rgba(255, 215, 0, 0.8);
+}
+
+.particle:nth-child(2n) {
+    animation-duration: 8s;
+    animation-delay: -2s;
+    background: radial-gradient(circle, #ff6b35, #f7931e, #ffd700, transparent);
+    box-shadow: 0 0 25px rgba(255, 107, 53, 1), 0 0 50px rgba(247, 147, 30, 0.8);
+}
+
+.particle:nth-child(3n) {
+    animation-duration: 10s;
+    animation-delay: -4s;
+    background: radial-gradient(circle, #ff1493, #ff69b4, #ffd700, transparent);
+    box-shadow: 0 0 25px rgba(255, 20, 147, 1), 0 0 50px rgba(255, 105, 180, 0.8);
+}
+
+.particle:nth-child(4n) {
+    width: 24px;
+    height: 24px;
+    animation-duration: 7s;
+    animation-delay: -1s;
+    background: radial-gradient(circle, #00ffff, #00bfff, #ffd700, transparent);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 1), 0 0 60px rgba(0, 191, 255, 0.8);
+}
+
+.particle:nth-child(5n) {
+    width: 12px;
+    height: 12px;
+    animation-duration: 12s;
+    animation-delay: -6s;
+    background: radial-gradient(circle, #ff4500, #ff6347, #ffd700, transparent);
+    box-shadow: 0 0 20px rgba(255, 69, 0, 1), 0 0 40px rgba(255, 99, 71, 0.8);
+}
+
+.particle:nth-child(6n) {
+    width: 20px;
+    height: 20px;
+    animation-duration: 9s;
+    animation-delay: -3s;
+    background: radial-gradient(circle, #9400d3, #8a2be2, #ffd700, transparent);
+    box-shadow: 0 0 28px rgba(148, 0, 211, 1), 0 0 55px rgba(138, 43, 226, 0.8);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Geometric Shapes */
+.shape {
+    position: absolute;
+    opacity: 0.7;
+    animation: drift 15s ease-in-out infinite;
+    border: 2px solid;
+}
+
+.shape.circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border-color: rgba(255, 255, 0, 0.8);
+    box-shadow: 0 0 40px rgba(255, 255, 0, 0.6), inset 0 0 40px rgba(255, 255, 0, 0.2);
+}
+
+.shape.square {
+    width: 90px;
+    height: 90px;
+    border-color: rgba(255, 107, 53, 0.8);
+    transform: rotate(45deg);
+    box-shadow: 0 0 35px rgba(255, 107, 53, 0.6), inset 0 0 35px rgba(255, 107, 53, 0.2);
+}
+
+.shape.triangle {
+    width: 0;
+    height: 0;
+    border-left: 45px solid transparent;
+    border-right: 45px solid transparent;
+    border-bottom: 78px solid rgba(255, 20, 147, 0.8);
+    opacity: 0.6;
+    border: none;
+    filter: drop-shadow(0 0 30px rgba(255, 20, 147, 0.5));
+}
+
+.shape.diamond {
+    width: 80px;
+    height: 80px;
+    border-color: rgba(0, 255, 255, 0.8);
+    transform: rotate(45deg);
+    box-shadow: 0 0 35px rgba(0, 255, 255, 0.6), inset 0 0 35px rgba(0, 255, 255, 0.2);
+}
+
+.shape.hexagon {
+    width: 100px;
+    height: 86px;
+    background: rgba(255, 69, 0, 0.8);
+    clip-path: polygon(50% 0%, 93.3% 25%, 93.3% 75%, 50% 100%, 6.7% 75%, 6.7% 25%);
+    box-shadow: 0 0 35px rgba(255, 69, 0, 0.6), inset 0 0 35px rgba(255, 69, 0, 0.2);
+    border: none;
+}
+
+.shape.pentagon {
+    width: 100px;
+    height: 90px;
+    background: rgba(148, 0, 211, 0.8);
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+    box-shadow: 0 0 35px rgba(148, 0, 211, 0.6), inset 0 0 35px rgba(148, 0, 211, 0.2);
+    border: none;
+}
+
+.shape:nth-child(2n) {
+    animation-duration: 20s;
+    animation-delay: -5s;
+}
+
+.shape:nth-child(3n) {
+    animation-duration: 25s;
+    animation-delay: -8s;
+}
+
+.shape:nth-child(4n) {
+    animation-duration: 18s;
+    animation-delay: -12s;
+}
+
+@keyframes drift {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-20px) rotate(90deg) scale(1.1);
+    }
+    50% {
+        transform: translateY(10px) rotate(180deg) scale(0.9);
+    }
+    75% {
+        transform: translateY(-30px) rotate(270deg) scale(1.05);
+    }
+}
+
+/* Subtle Light Rays */
+.light-ray {
+    position: absolute;
+    width: 6px;
+    height: 100vh;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 0, 0.8), rgba(255, 215, 0, 0.6), rgba(255, 140, 0, 0.4), transparent);
+    animation: rayPulse 6s ease-in-out infinite;
+    opacity: 0.9;
+    box-shadow: 0 0 30px rgba(255, 255, 0, 0.5);
+}
+
+.light-ray:nth-child(2n) {
+    animation-delay: -2s;
+    background: linear-gradient(to bottom, transparent, rgba(255, 107, 53, 0.8), rgba(247, 147, 30, 0.6), rgba(255, 99, 71, 0.4), transparent);
+    box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+    width: 5px;
+}
+
+.light-ray:nth-child(3n) {
+    animation-delay: -4s;
+    background: linear-gradient(to bottom, transparent, rgba(255, 20, 147, 0.8), rgba(255, 105, 180, 0.6), rgba(255, 182, 193, 0.4), transparent);
+    box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+    width: 7px;
+}
+
+.light-ray:nth-child(4n) {
+    animation-delay: -1s;
+    background: linear-gradient(to bottom, transparent, rgba(0, 255, 255, 0.8), rgba(0, 191, 255, 0.6), rgba(135, 206, 235, 0.4), transparent);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+    width: 4px;
+}
+
+@keyframes rayPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scaleY(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scaleY(1.2);
+    }
+}
+
+/* Luxury Background Container */
+.luxury-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+/* ===== FADE TRANSITION ===== */
+.fade-out {
+    opacity: 0;
+}
+
+/* ===== AUTH CONTAINER ===== */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ===== GLASS BOX ===== */
+.auth-box {
+    width: 360px;
+    padding: 40px;
+
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border-radius: 15px;
+
+    margin: auto;
+position: relative;
+z-index: 2;
+
+    background: linear-gradient(
+    145deg,
+    rgba(255,255,255,0.05),
+    rgba(0,0,0,0.4)
+);
+
+    text-align: center;
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    /* 💎 Soft glow */
+    box-shadow: 0 0 30px rgba(198,164,90,0.2);
+
+    transition: 0.4s;
+}
+
+/* Glow on hover */
+.auth-box:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 0 60px rgba(198,164,90,0.4);
+}
+
+/* ===== BRAND ===== */
+.auth-box h2 {
+    color: #c6a45a;
+    letter-spacing: 4px;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* ===== TAGLINE ===== */
+.auth-box p {
+    color: #aaa;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* ===== INPUT GROUP ===== */
+.inputBox {
+    position: relative;
+    margin: 25px 0;
+}
+
+/* INPUT */
+.inputBox input {
+    width: 100%;
+    padding: 10px 5px;
+
+    border: none;
+    border-bottom: 1px solid #555;
+
+    background: transparent;
+    color: white;
+    font-size: 14px;
+
+    outline: none;
+}
+
+/* FLOAT LABEL */
+.inputBox label {
+    position: absolute;
+    left: 5px;
+    top: 10px;
+    color: #777;
+    transition: 0.3s;
+}
+
+/* LABEL ANIMATION */
+.inputBox input:focus ~ label,
+.inputBox input:valid ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #c6a45a;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff !important;
+    caret-color: #ffffff !important;
+    background-color: rgba(5,5,5,0.88) !important;
+    box-shadow: 0 0 0px 1000px rgba(5,5,5,0.88) inset !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgba(5,5,5,0.88) inset !important;
+    border: 1px solid rgba(198,164,90,0.5) !important;
+    background-clip: content-box !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+}
+
+input:-webkit-autofill::first-line,
+textarea:-webkit-autofill::first-line,
+select:-webkit-autofill::first-line {
+    color: #ffffff !important;
+}
+/* ===== BUTTON ===== */
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+
+    background: linear-gradient(135deg, #c6a45a, #d4af37);
+    border: none;
+    border-radius: 30px;
+
+    color: black;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+/* BUTTON HOVER */
+.auth-btn:hover {
+    box-shadow: 0 0 20px #c6a45a;
+    transform: translateY(-2px);
+}
+
+/* ===== LINKS ===== */
+.auth-link {
+    margin-top: 15px;
+    color: #bbb;
+    font-size: 14px;
+}
+
+.auth-link a {
+    color: #c6a45a;
+    text-decoration: none;
+}
+
+.auth-link a:hover {
+    text-decoration: underline;
+}
+
+/* ===== ERROR ===== */
+.error {
+    color: #ff4d4d;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+/* ===== SUCCESS TOAST (FIXES YOUR SHIFT ISSUE) ===== */
+.toast {
+    position: fixed;   /* 🔥 THIS FIXES YOUR LEFT SHIFT BUG */
+    top: 20px;
+    right: 20px;
+
+    background: #c6a45a;
+    color: black;
+
+    padding: 12px 20px;
+    border-radius: 30px;
+
+    font-size: 14px;
+    z-index: 9999;
+
+    opacity: 0;
+    transform: translateY(-20px);
+
+    animation: slideIn 0.5s forwards, fadeOut 0.5s forwards 2.5s;
+}
+
+/* Toast animation */
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
+
+#particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+}
+.fade-out {
+    opacity: 0;
+}
+

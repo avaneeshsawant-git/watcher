@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact - TimeSteal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+    /* ===== NAVBAR FIX (FORCE APPLY) ===== */
+
+.navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    padding: 15px 60px;
+}
+
+.nav-container {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #c6a45a;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 4px;
+}
+
+/* 🚨 MAIN FIX */
+.nav-links {
+    display: flex !important;
+    flex-direction: row !important;
+    list-style: none !important;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    list-style: none !important;
+}
+
+.nav-links a {
+    position: relative;
+    color: white !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0%;
+    height: 2px;
+    background: #c6a45a;
+    transition: 0.4s ease;
+}
+
+.nav-links a:hover {
+    color: #c6a45a !important;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.welcome {
+    color: #c6a45a;
+}
+
+/* prevent overlap */
+body {
+    padding-top: 90px;
+}
+
+/* 🌌 BASE */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #050505;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* ✨ CURSOR GOLD GLOW */
+#cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(198,164,90,0.2), transparent);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    filter: blur(80px);
+    z-index: 9999;
+}
+
+/* 🏆 HEADER */
+.header {
+    text-align: center;
+    padding: 100px 20px 40px;
+}
+
+.header h1 {
+    font-family: 'Playfair Display';
+    letter-spacing: 5px;
+    color: #c6a45a;
+    font-size: 40px;
+}
+
+.header p {
+    color: #aaa;
+}
+
+/* 🧊 SECTION */
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 40px;
+}
+
+/* 🗺 MAP */
+#map {
+    height: 450px;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    box-shadow: 0 0 40px rgba(198,164,90,0.2);
+}
+
+/* 🏬 STORE GRID */
+.stores {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+    gap: 30px;
+}
+
+/* 💎 GLASS CARD */
+.store-card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    transition: 0.5s;
+    border: 1px solid transparent;
+}
+
+.store-card:hover {
+    border: 1px solid #c6a45a;
+    transform: translateY(-10px);
+    box-shadow: 0 0 30px rgba(198,164,90,0.5);
+}
+
+.store-card h3 {
+    color: #c6a45a;
+}
+
+/* 📩 FORM */
+.contact-box {
+    max-width: 500px;
+    margin: 80px auto;
+    background: rgba(255,255,255,0.05);
+    padding: 40px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+}
+
+/* INPUT */
+.inputBox {
+    position: relative;
+    margin: 20px 0;
+}
+
+.inputBox input,
+.inputBox textarea {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #444;
+    color: white;
+    outline: none;
+}
+
+.inputBox label {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    color: #777;
+    transition: 0.3s;
+}
+
+.inputBox input:focus ~ label,
+.inputBox input:valid ~ label,
+.inputBox textarea:focus ~ label,
+.inputBox textarea:valid ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #c6a45a;
+}
+
+/* 🚀 BUTTON */
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #c6a45a;
+    background: transparent;
+    color: #c6a45a;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #c6a45a;
+    left: -100%;
+    top: 0;
+    transition: 0.4s;
+    z-index: -1;
+}
+
+.btn:hover::before {
+    left: 0;
+}
+
+.btn:hover {
+    color: black;
+    box-shadow: 0 0 20px rgba(198,164,90,0.6);
+}
+
+/* 🎬 SCROLL ANIMATION */
+.fade {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: 0.8s ease;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ✨ CURSOR -->
+<div id="cursor-glow"></div>
+
+<!-- HEADER -->
+<div class="header fade">
+<h1>TIME STEAL</h1>
+<p>Visit our luxury showrooms across India</p>
+</div>
+
+<div class="section">
+
+<!-- MAP -->
+<div id="map" class="fade"></div>
+
+<!-- STORES -->
+<div class="stores">
+
+<div class="store-card fade">
+<h3>Mumbai Flagship</h3>
+<p>Jio World Plaza, BKC</p>
+<p>📞 +91 98765 43210</p>
+</div>
+
+<div class="store-card fade">
+<h3>Delhi Showroom</h3>
+<p>DLF Emporio, Vasant Kunj</p>
+<p>📞 +91 91234 56789</p>
+</div>
+
+<div class="store-card fade">
+<h3>Bangalore Studio</h3>
+<p>UB City Mall</p>
+<p>📞 +91 99887 77665</p>
+</div>
+
+</div>
+
+<br><br>
+
+<button onclick="findStore()" class="btn fade">Find Nearest Store</button>
+
+</div>
+
+<!-- FORM -->
+<div class="contact-box fade">
+
+<h2 style="text-align:center;color:#c6a45a;">Get in Touch</h2>
+
+<form action="send_mail.php" method="POST">
+
+<div class="inputBox">
+<input type="text" name="name" required>
+<label>Name</label>
+</div>
+
+<div class="inputBox">
+<input type="email" name="email" required>
+<label>Email</label>
+</div>
+
+<div class="inputBox">
+<textarea name="message" rows="4" required></textarea>
+<label>Message</label>
+</div>
+
+<button class="btn">Send Message</button>
+
+</form>
+
+</div>
+
+<!-- JS -->
+
+<script>
+// ✨ CURSOR GLOW
+document.addEventListener("mousemove", e => {
+    const glow = document.getElementById("cursor-glow");
+    glow.style.left = e.clientX + "px";
+    glow.style.top = e.clientY + "px";
+});
+
+// 🎬 SCROLL ANIMATION
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
+document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+// 📍 FIND STORE
+function findStore() {
+    navigator.geolocation.getCurrentPosition(pos => {
+        const userLat = pos.coords.latitude;
+        const userLng = pos.coords.longitude;
+
+        const stores = [
+            { name: "Mumbai", lat: 19.0760, lng: 72.8777 },
+            { name: "Delhi", lat: 28.6139, lng: 77.2090 },
+            { name: "Bangalore", lat: 12.9716, lng: 77.5946 }
+        ];
+
+        let nearest = stores[0];
+        let min = 999999;
+
+        stores.forEach(s => {
+            const d = Math.hypot(userLat - s.lat, userLng - s.lng);
+            if(d < min){
+                min = d;
+                nearest = s;
+            }
+        });
+
+        alert("Nearest Store: " + nearest.name);
+    });
+}
+
+// 🗺 GOOGLE MAP
+function initMap() {
+
+    const india = { lat: 20.5937, lng: 78.9629 };
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        center: india,
+        styles: [
+            { elementType: "geometry", stylers: [{ color: "#1d1d1d" }] },
+            { elementType: "labels.text.fill", stylers: [{ color: "#c6a45a" }] }
+        ]
+    });
+
+    const locations = [
+        { lat: 19.0760, lng: 72.8777, title: "Mumbai" },
+        { lat: 28.6139, lng: 77.2090, title: "Delhi" },
+        { lat: 12.9716, lng: 77.5946, title: "Bangalore" }
+    ];
+
+    locations.forEach(loc => {
+        new google.maps.Marker({
+            position: loc,
+            map: map,
+            title: loc.title
+        });
+    });
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTNnJwVs8TqfMBW4EzRRu5W1c75-yjygI&callback=initMap" async defer></script>
+
+</body>
+<header class="navbar">
+    <div class="nav-container">
+
+        <div class="logo">TIME STEAL</div>
+
+        <ul class="nav-links">
+            <li><a href="/timesteal/home.php">Home</a></li>
+            <li><a href="/timesteal/home.php#collection">Collection</a></li>
+            <li><a href="/timesteal/about.html">About</a></li>
+            <li><a href="/timesteal/contact.php">Contact</a></li>
+
+            <li class="welcome" id="current-user">Welcome, User</li>
+
+            <li><a href="/timesteal/cart.php">Cart</a></li>
+            <li><a href="/timesteal/logout.php">Logout</a></li>
+        </ul>
+
+    </div>
+</header>
+<script>
+fetch("/timesteal/current_user.php", { credentials: "same-origin" })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.loggedIn) {
+            window.location.href = "/timesteal/login.php";
+            return;
+        }
+
+        document.getElementById("current-user").textContent = "Welcome, " + data.username;
+    })
+    .catch(() => {
+        document.getElementById("current-user").textContent = "Welcome, User";
+    });
+</script>
+</html>
