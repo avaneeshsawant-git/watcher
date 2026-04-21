@@ -4,23 +4,6 @@
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Installation](#installation)
-- [Setup & Configuration](#setup--configuration)
-- [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
-- [Usage Guide](#usage-guide)
-- [Security Features](#security-features)
-- [Performance](#performance)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 ## 🎯 Overview
 
 *TimeSteal* is a fully-featured, production-ready luxury watch e-commerce platform built with modern web technologies. It provides a seamless shopping experience for premium watch enthusiasts with secure authentication, advanced product management, and comprehensive checkout functionality.
